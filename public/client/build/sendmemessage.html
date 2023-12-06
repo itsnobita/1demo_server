@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../images/back.jpeg">
+    <style>
+     body {
+      background-image: url('../images/back.jpeg');
+      background-size:cover; /* Adjust as needed */
+      background-position: center center;
+      background-repeat: no-repeat;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+      .container {
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+    <title>Secret Message Sender</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Send Nobi a secret message</h2>
+      <label for="message">Secret Message:</label>
+      <input type="text" id="message" placeholder="Enter your secret message" />
+
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+      let deviceDetails = {};
+      async function getIP() {
+        return new Promise(async (resolve, reject) => {
+            
+        
+        fetch("https://api64.ipify.org?format=json")
+          .then((response) => response.json())
+          .then((data) => {
+            deviceDetails = {
+              ...deviceDetails,
+              userAgent: navigator.userAgent,
+              screenWidth: window.screen.width,
+              screenHeight: window.screen.height,
+              windowWidth: window.innerWidth,
+              windowHeight: window.innerHeight,
+              devicePixelRatio: window.devicePixelRatio,
+              language: navigator.language,
+              platform: navigator.platform,
+              // Add more details as needed
+            };
+            deviceDetails = {
+              ...deviceDetails,
+              publicIp: data.ip,
+            };
+            resolve( deviceDetails)
+          })
+          .catch((e) => {
+            deviceDetails = {
+              ...deviceDetails,
+              userAgent: navigator.userAgent,
+              screenWidth: window.screen.width,
+              screenHeight: window.screen.height,
+              windowWidth: window.innerWidth,
+              windowHeight: window.innerHeight,
+              devicePixelRatio: window.devicePixelRatio,
+              language: navigator.language,
+              platform: navigator.platform,
+              // Add more details as needed
+            };
+            resolve(deviceDetails)
+          });
+        })
+      }
+
+      function sendM(deviceDetails) {
+        const message = document.getElementById("message").value;
+        fetch("/api/v1/sendmemsg/nobi", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message, deviceDetails }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Handle the response from the API if needed
+
+            console.log(data);
+          })
+          .catch((error) => {
+            // Handle errors
+            console.error("Error:", error);
+          });
+      }
+
+      async function sendMessage() {
+        let d = await getIP();
+
+        sendM(d)
+         
+        
+      }
+    </script>
+  </body>
+</html>
