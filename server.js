@@ -46,7 +46,7 @@ const init = async () => {
     // await createDBPool("appDB");
     // await createDBPool("cdets");
     await AppServer.create(config.get("SOCKET_SERVER_PORT"), true);
-    await AppServer.create(config.get("LOCAL_SERVER_PORT"), false);
+    // await AppServer.create(config.get("LOCAL_SERVER_PORT"), false);
     console.log(process.pid)
     // require("./cronJob/cron-tabs");
 };
