@@ -12,6 +12,8 @@ import APIRoutes from "./APIRoutes";
 import DBConnection from "./dao/connection";
 import { dbProperty } from "./utility/read-properties";
 import Socket from "./service/socket"
+import dotenv from 'dotenv';
+dotenv.config();
 
 const Appserver = {
     create: async (port, socketEnabled) => {
@@ -34,7 +36,7 @@ const Appserver = {
         objAPIRoutes.routes("/api/v1");
         
         objAPIRoutes.routes("/api/v2");
-
+console.log(process.env.mongoDB)
         const mongoDBConnString = dbProperty("mongoDB");
         await DBConnection.createMongoDBConnectionPool("mongo1", {
             URL: mongoDBConnString,

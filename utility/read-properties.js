@@ -26,56 +26,14 @@ const dbProperty = (name) => {
         port = "",
         sid = "",
         service = "";
-
-    if (name === "cdets" || name === "siebel" || name === "siebel_ro") {
-        username = dbProperties.get("siebelRo.username");
-        password = dbProperties.get("siebelRo.password");
-        dbtype = dbProperties.get("siebelRo.dbtype");
-        type = dbProperties.get("siebelRo.type");
-        host = dbProperties.get("siebelRo.host");
-        port = dbProperties.get("siebelRo.port");
-        sid = dbProperties.get("siebelRo.sid");
-        service = dbProperties.get("siebelRo.service");
-    } else if (name === "iops" || name === "hrms") {
-        username = dbProperties.get("iops.username");
-        password = dbProperties.get("iops.password");
-        dbtype = dbProperties.get("iops.dbtype");
-        type = dbProperties.get("iops.type");
-        host = dbProperties.get("iops.host");
-        port = dbProperties.get("iops.port");
-        sid = dbProperties.get("iops.sid");
-        service = dbProperties.get("iops.service");
-    } else if (name === "appDB") {
-        username = dbProperties.get("appDB.username");
-        password = dbProperties.get("appDB.password");
-        dbtype = dbProperties.get("appDB.dbtype");
-        type = dbProperties.get("appDB.type");
-        host = dbProperties.get("appDB.host");
-        port = dbProperties.get("appDB.port");
-        sid = dbProperties.get("appDB.sid");
-        service = dbProperties.get("appDB.service");
-    } else if (name === "mongoDB") {
+ if (name === "mongoDB") {
         dbtype = dbProperties.get("appDBMongo.dbtype");
-        service = dbProperties.get("appDBMongo.connectionString");
+        service = process.env.mongoDB;
+            // dbProperties.get("appDBMongo.connectionString");
     } else {
     }
 
-    if (dbtype === "oracle") {
-        if (type === "string") {
-            connectionString = {
-                user: username,
-                password: password,
-                connectString: `(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(Host=\"${host}\")(Port=\"${port}\"))(CONNECT_DATA=(SID=\"${sid}\")))`,
-            };
-        } else if (type === "service") {
-            connectionString = {
-                user: username,
-                password: password,
-                connectString: `${host}:${port}/${service}`,
-            };
-        } else {
-        }
-    } else if (dbtype === "mongo") {
+     if (dbtype === "mongo") {
         connectionString = service;
     } else {
     }
