@@ -55,11 +55,28 @@
       button:hover {
         background-color: #45a049;
       }
+      .alert-success {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid #4caf50; /* Green border */
+        border-radius: 4px;
+        color: #4caf50; /* Green text color */
+        background-color: #dff0d8; /* Light green background */
+      }
+
+      .alert-success strong {
+        font-weight: bold;
+      }
+
+      .alert-success a {
+        color: #155724; /* Dark green link color */
+      }
     </style>
     <title>Secret Message Sender</title>
   </head>
   <body>
     <div class="container">
+      <span id="confirm"></span>
       <h2>Send Nobi a secret message</h2>
       <label for="message">Secret Message:</label>
       <input type="text" id="message" placeholder="Enter your secret message" />
@@ -122,8 +139,19 @@
           .then((response) => response.json())
           .then((data) => {
             // Handle the response from the API if needed
+            document.getElementById("message").value = "";
+            let confirm = document.getElementById("confirm");
+            confirm.innerHTML = `<div class="alert alert-success" role="alert">Message sent successfully</div>`;
+            confirm.style.display = "block";
+            setTimeout(() => {
+              confirm.style.opacity = 0;
+              confirm.style.transition = "opacity 2s";
+              setTimeout(() => {
+                confirm.style.display = "none";
+              }, 500);
+            }, 3000);
 
-            console.log(data);
+            // console.log(data);
           })
           .catch((error) => {
             // Handle errors
