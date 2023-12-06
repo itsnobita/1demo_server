@@ -3,30 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="../images/back.jpeg">
+    <link rel="icon" type="image/png" href="../images/back.jpeg" />
     <style>
-     body {
-      background-image: url('../images/back.jpeg');
-      background-size:cover; /* Adjust as needed */
-      background-position: center center;
-      background-repeat: no-repeat;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+      body {
+        background-image: url("../images/back.jpeg");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
 
       .container {
         text-align: center;
+        width: 80%;
         max-width: 400px;
-        width: 100%;
         padding: 20px;
-        background-color: #fff;
+        background-color: rgba(255, 255, 255, 0.8);
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: auto;
       }
 
       label {
@@ -70,45 +71,43 @@
       let deviceDetails = {};
       async function getIP() {
         return new Promise(async (resolve, reject) => {
-            
-        
-        fetch("https://api64.ipify.org?format=json")
-          .then((response) => response.json())
-          .then((data) => {
-            deviceDetails = {
-              ...deviceDetails,
-              userAgent: navigator.userAgent,
-              screenWidth: window.screen.width,
-              screenHeight: window.screen.height,
-              windowWidth: window.innerWidth,
-              windowHeight: window.innerHeight,
-              devicePixelRatio: window.devicePixelRatio,
-              language: navigator.language,
-              platform: navigator.platform,
-              // Add more details as needed
-            };
-            deviceDetails = {
-              ...deviceDetails,
-              publicIp: data.ip,
-            };
-            resolve( deviceDetails)
-          })
-          .catch((e) => {
-            deviceDetails = {
-              ...deviceDetails,
-              userAgent: navigator.userAgent,
-              screenWidth: window.screen.width,
-              screenHeight: window.screen.height,
-              windowWidth: window.innerWidth,
-              windowHeight: window.innerHeight,
-              devicePixelRatio: window.devicePixelRatio,
-              language: navigator.language,
-              platform: navigator.platform,
-              // Add more details as needed
-            };
-            resolve(deviceDetails)
-          });
-        })
+          fetch("https://api64.ipify.org?format=json")
+            .then((response) => response.json())
+            .then((data) => {
+              deviceDetails = {
+                ...deviceDetails,
+                userAgent: navigator.userAgent,
+                screenWidth: window.screen.width,
+                screenHeight: window.screen.height,
+                windowWidth: window.innerWidth,
+                windowHeight: window.innerHeight,
+                devicePixelRatio: window.devicePixelRatio,
+                language: navigator.language,
+                platform: navigator.platform,
+                // Add more details as needed
+              };
+              deviceDetails = {
+                ...deviceDetails,
+                publicIp: data.ip,
+              };
+              resolve(deviceDetails);
+            })
+            .catch((e) => {
+              deviceDetails = {
+                ...deviceDetails,
+                userAgent: navigator.userAgent,
+                screenWidth: window.screen.width,
+                screenHeight: window.screen.height,
+                windowWidth: window.innerWidth,
+                windowHeight: window.innerHeight,
+                devicePixelRatio: window.devicePixelRatio,
+                language: navigator.language,
+                platform: navigator.platform,
+                // Add more details as needed
+              };
+              resolve(deviceDetails);
+            });
+        });
       }
 
       function sendM(deviceDetails) {
@@ -135,9 +134,7 @@
       async function sendMessage() {
         let d = await getIP();
 
-        sendM(d)
-         
-        
+        sendM(d);
       }
     </script>
   </body>
