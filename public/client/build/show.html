@@ -71,7 +71,7 @@
 
         const timestamp = document.createElement('div');
         timestamp.classList.add('timestamp');
-        timestamp.textContent = new Date(message.createdAt.$date).toLocaleString();
+        timestamp.textContent = new Date(message.createdAt).toLocaleString();
 
         messageItem.appendChild(messageText);
         messageItem.appendChild(timestamp);

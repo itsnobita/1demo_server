@@ -197,9 +197,9 @@
       }
 
       async function sendMessage() {
-        if(document.getElementById("message").value==""){
-          let inp=document.getElementById("message")
-           
+        let inp=document.getElementById("message")
+        if(inp.value.trim()==""){
+          inp.value=""
           inp.classList.add("shake")
          
           inp.placeholder="Can't be empty.."  
