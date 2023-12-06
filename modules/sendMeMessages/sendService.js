@@ -7,3 +7,12 @@ export const saveMessage = async (obj) => {
         throw error
     }
 }
+
+export const getMessages = async () => {
+    try {
+        let result = await messagesDao.getMessages()
+        return result;
+    } catch (error) {
+        throw error
+    }
+}

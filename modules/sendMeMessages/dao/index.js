@@ -18,6 +18,24 @@ const messagesDao = {
                 error: error
             }
         }
+    },
+    getMessages :async () => {
+        try {
+            let db = await mongoose.model("messages").find({});
+            return {
+                status: "success",
+                statusCode: 200,
+                result: db,
+                error: null
+            }
+        } catch (error) {
+            throw {
+                status: "failed",
+                statusCode: 500,
+                result: null,
+                error: error
+            }
+        }
     }
 }
 

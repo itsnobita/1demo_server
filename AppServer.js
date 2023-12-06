@@ -50,6 +50,12 @@ console.log(process.env.mongoDB)
                 path.resolve(__dirname, "public/client/build/socket.html")
             );
         });
+        app.get("/minelove", (req, res) => {
+            // logger.info(`url - ${req.originalUrl}`);
+            res.sendFile(
+                path.resolve(__dirname, "public/client/build/show.html")
+            );
+        });
         app.get("/nobi", (req, res) => {
             // logger.info(`url - ${req.originalUrl}`);
             res.sendFile(

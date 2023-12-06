@@ -141,8 +141,10 @@
             // Handle the response from the API if needed
             document.getElementById("message").value = "";
             let confirm = document.getElementById("confirm");
-            confirm.innerHTML = `<div class="alert alert-success" role="alert">Message sent successfully</div>`;
             confirm.style.display = "block";
+            confirm.style.opacity = 1;
+            confirm.innerHTML = `<div class="alert alert-success" role="alert">Message sent successfully</div>`;
+            
             setTimeout(() => {
               confirm.style.opacity = 0;
               confirm.style.transition = "opacity 2s";
