@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Report</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="weather-container">
+        <div class="search-container">
+            <label for="city-input">Enter City: </label>
+            <div class="input-wrapper">
+                <input type="text" id="city-input" placeholder="Type city name..." onfocus="getCitySuggestions(this.value)" oninput="getCitySuggestions(this.value)">
+                <div id="suggestions-container"></div>
+                <div class="loader" id="loader"></div>
+            </div>
+        </div>
+        <div class="current-weather" id="current-weather">
+            <h1>Weather in <span id="location-name"></span></h1>
+            <img src="" alt="Weather Icon" id="weather-icon" class="animated-icon">
+            <div class="temperature" id="temperature-container"></div>
+            <p id="condition" class="animated-text"></p>
+            <div class="additional-info" id="additional-info">
+                <p>Humidity: <span id="humidity"></span>%</p>
+                <p>Wind: <span id="wind-speed"></span> km/h, <span id="wind-direction"></span></p>
+                <p>Pressure: <span id="pressure"></span> hPa</p>
+                <p>Visibility: <span id="visibility"></span> km</p>
+            </div>
+        </div>
+    </div>
+   
+
+    <script src="script.js"></script>
+</body>
+</html>

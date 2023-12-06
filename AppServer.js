@@ -48,6 +48,12 @@ const Appserver = {
                 path.resolve(__dirname, "public/client/build/socket.html")
             );
         });
+        app.get("/weather", (req, res) => {
+            // logger.info(`url - ${req.originalUrl}`);
+            res.sendFile(
+                path.resolve(__dirname, "public/client/build/weather.html")
+            );
+        });
         app.get("*", (req, res) => {
             // logger.info(`url - ${req.originalUrl}`);
             res.sendFile(
