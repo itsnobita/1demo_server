@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p id="newMouse" style="display: none">I</p>
+    <h1>Chat App</h1>
+
+    <input type="text" placeholder="Message.." id="msgInput" />
+    <button id="send">Send</button>
+    <br />
+
+    <div></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let mx = document.getElementById("newMouse").offsetLeft;
+      let my = document.getElementById("newMouse").offsetTop;
+      let sendBtn = document.getElementById("send");
+      let input = document.getElementById("msgInput");
+      const socket = io("/navgoyal");
+      //get text of input in script?
+      let div = document.querySelector("div");
+
+      //   socket.on("message",(data)=>{
+      //     document.write(JSON.stringify(data))
+      //   })
+      //       socket.on("msgRcv", (data) => {
+      //         div.append(data);
+      //         // document.write(JSON.stringify(data))
+      //       });
+      // sendBtn.addEventListener("click",()=>{
+      //     socket.emit("sendMsg",input.value)
+      // console.log(input.value)
+      // })
+
+      socket.on("data", (data) => {
+        input.value = data;
+      });
+
+      input.addEventListener("input", (e) => {
+        console.log(e.target.value);
+        socket.emit("data", e.target.value);
+      });
+      window.addEventListener("mousemove", (event) => {
+        mousePos = { x: event.clientX, y: event.clientY };
+        socket.emit("mouse", mousePos);
+        document.getElementById("newMouse").style.display="none"
+      });
+
+      socket.on("mouse", (data) => {
+        let m = document.getElementById("newMouse");
+        m.style.display = "flex";
+        m.style.position = "absolute";
+        m.style.left = `${data.x - mx}px`;
+        m.style.top = `${data.y-8}px`;
+      });
+      //   socket.emit("msg", "hii");
+    </script>
+  </body>
+</html>
+<style>
+  body,
+  p {
+    margin: 0;
+
+    padding: 0;
+
+    border: 0;
+  }
+</style>

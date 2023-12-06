@@ -1,0 +1,4 @@
+GET http://localhost:9090/api/v1/try/1
+
+###
+GET http://localhost:9090/api/v1/try/1
