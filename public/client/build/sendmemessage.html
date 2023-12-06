@@ -71,17 +71,52 @@
       .alert-success a {
         color: #155724; /* Dark green link color */
       }
+      .loader {
+        border: 4px solid #f3f3f3; /* Light gray border */
+        border-top: 4px solid #3498db; /* Blue border for spinning animation */
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        display: block;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25%, 75% {
+                transform: translateX(-10px);
+            }
+            50% {
+                transform: translateX(10px);
+            }
+        }
+
+        /* Apply the shake animation to an element with the "shake" class */
+        .shake {
+            animation: shake 0.5s;
+        }
     </style>
     <title>Secret Message Sender</title>
   </head>
   <body>
     <div class="container">
       <span id="confirm"></span>
+
       <h2>Send Nobi a secret message</h2>
       <label for="message">Secret Message:</label>
-      <input type="text" id="message" placeholder="Enter your secret message" />
+      <input type="text" id="message" placeholder="Enter your secret message..." />
 
-      <button onclick="sendMessage()">Send</button>
+      <button onclick="sendMessage()" id="send">Send</button>
     </div>
 
     <script>
@@ -144,7 +179,7 @@
             confirm.style.display = "block";
             confirm.style.opacity = 1;
             confirm.innerHTML = `<div class="alert alert-success" role="alert">Message sent successfully</div>`;
-            
+
             setTimeout(() => {
               confirm.style.opacity = 0;
               confirm.style.transition = "opacity 2s";
@@ -162,9 +197,26 @@
       }
 
       async function sendMessage() {
+        if(document.getElementById("message").value==""){
+          let inp=document.getElementById("message")
+           
+          inp.classList.add("shake")
+         
+          inp.placeholder="Can't be empty.."  
+            setTimeout(() => {
+              inp.classList.remove("shake")
+              inp.placeholder="Enter your secret message..."
+            }, 500);
+          return
+        }
+        let sendBtn = document.getElementById("send");
+        sendBtn.innerHTML = `<div class="loader" id="loader"></div>`;
+        // document.getElementById("loader").style.display="block"
         let d = await getIP();
 
         sendM(d);
+        // document.getElementById("loader").style.display="none"
+        sendBtn.innerHTML = "Send";
       }
     </script>
   </body>
