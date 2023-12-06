@@ -42,18 +42,19 @@ const Appserver = {
 
         /*BEGIN : Serving Static Files/ FRONTEND Files */
         app.use(express.static(__dirname + "/public/client/build/"));
-        app.get("*", (req, res) => {
-            // logger.info(`url - ${req.originalUrl}`);
-            res.sendFile(
-                path.resolve(__dirname, "public/client/build/index.html")
-            );
-        });
         app.get("/socket", (req, res) => {
             // logger.info(`url - ${req.originalUrl}`);
             res.sendFile(
                 path.resolve(__dirname, "public/client/build/socket.html")
             );
         });
+        app.get("*", (req, res) => {
+            // logger.info(`url - ${req.originalUrl}`);
+            res.sendFile(
+                path.resolve(__dirname, "public/client/build/index.html")
+            );
+        });
+        
 
         appServer.listen(port, () => {
           
