@@ -165,10 +165,9 @@
       function sendData() {
         // Get input values
         const messageInput = document.getElementById("message");
-        const message = messageInput.value.trim();
+        const message = messageInput.value.toLowerCase().trim();
         const imageInput = document.getElementById("image");
         const imageFile = imageInput.files[0];
-
         // Check if the message is empty
         if (!message) {
           // Add shake animation and set placeholder temporarily
@@ -221,7 +220,7 @@
               document.getElementById("linkBox").style.display = "block";
               var baseURL = window.location.origin;
               document.getElementById("linkInput").value =
-                baseURL + "/ss/" + data.result.id;
+                baseURL + "/ss/" + encodeURIComponent(data.result.id)
               // Display the base URL in the console or alert
               // console.log("Base URL:", baseURL);
             })
