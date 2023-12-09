@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screenshot</title>
+  <link rel="icon" type="image/png" href="../images/ss.jpeg" />
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+
+    input.invalid {
+      border-color: #ff0000;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Popup styles */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    /* Shake animation */
+    @keyframes shake {
+      10%, 90% {
+        transform: translateX(-5px);
+      }
+      20%, 80% {
+        transform: translateX(5px);
+      }
+      30%, 50%, 70% {
+        transform: translateX(-5px);
+      }
+      40%, 60% {
+        transform: translateX(5px);
+      }
+    }
+
+    .shake {
+      animation: shake 0.5s;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- <h1>Send Message and Image to API</h1> -->
+
+  <form id="apiForm">
+    <label for="message">Enter Message:</label>
+    <input type="text" id="message" name="message" placeholder = 'Enter Message' required>
+
+    <label for="image">Select Image:</label>
+    <input type="file" id="image" name="image" accept="image/*" required>
+
+    <button type="button" onclick="sendData()">Upload</button>
+  </form>
+
+  <!-- Popup -->
+  <div id="successPopup" class="popup">
+    <p>Data uploaded successfully!</p>
+  </div>
+
+  <script>
+    function sendData() {
+      // Get input values
+      const messageInput = document.getElementById('message');
+      const message = messageInput.value.trim();
+      const imageInput = document.getElementById('image');
+      const imageFile = imageInput.files[0];
+
+      // Check if the message is empty
+      if (!message) {
+        // Add shake animation and set placeholder temporarily
+        messageInput.classList.add('shake', 'invalid');
+        messageInput.placeholder = 'Cannot be empty';
+        messageInput.value="";
+
+        // Remove animation and reset placeholder after 2 seconds
+        setTimeout(() => {
+          messageInput.classList.remove('shake', 'invalid');
+          messageInput.placeholder = 'Enter Message';
+          
+        }, 2000);
+
+        return;
+      }
+
+      // Check if an image is selected
+      if (!imageFile) {
+        alert('Please select an image.');
+        return;
+      }
+
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.onload = function () {
+        const base64Image = reader.result.split(',')[1];
+
+        // Prepare data to send to API
+        const data = {
+          id: message,
+          screenshot: base64Image
+        };
+        // console.log(data)
+
+        // Make API request (replace 'YOUR_API_ENDPOINT' with the actual API endpoint)
+        fetch('/api/v1/ss/set', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+        //   console.log('API response:', data);
+          // Handle API response as needed
+
+          // Show success popup
+          showPopup('successPopup');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // Handle errors
+        });
+      };
+
+      reader.readAsDataURL(imageFile);
+    }
+
+    function showPopup(popupId) {
+      const popup = document.getElementById(popupId);
+      popup.style.display = 'block';
+
+      // Close the popup after 3 seconds (adjust as needed)
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
+
+
+

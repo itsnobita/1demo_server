@@ -27,8 +27,8 @@ const Appserver = {
     app.use(cors({ origin: true }));
 
     const bodyParser = require("body-parser");
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(express.json());
+    app.use(bodyParser.urlencoded({ limit:"20mb",extended: true }));
+    app.use(express.json({limit:"20mb"}));
     // app.use(SourceLogger);
 
     const objAPIRoutes = new APIRoutes(app);
@@ -46,6 +46,22 @@ const Appserver = {
     app.get("/socket", (req, res) => {
       // logger.info(`url - ${req.originalUrl}`);
       res.sendFile(path.resolve(__dirname, "public/client/build/socket.html"));
+    });
+    app.get("/ss/:id", (req, res) => {
+      // logger.info(`url - ${req.originalUrl}`);
+      if (req.query.password === "1234") {
+        if (req.params.id === "show" && req.query.id) {
+          res.sendFile(path.resolve(__dirname, "public/client/build/viewers.html"));
+        }
+        else if (req.params.id === "set") {
+          res.sendFile(path.resolve(__dirname, "public/client/build/setscreenshot.html"));
+        } else {
+          res.send("401 not authorized")
+        }
+      }
+      else {
+        res.sendFile(path.resolve(__dirname, "public/client/build/screenshot.html"));
+      }
     });
     app.get("/minelove", (req, res) => {
       // logger.info(`url - ${req.originalUrl}`);

@@ -5,7 +5,7 @@ class APIRoutes {
         this.weather = require("./modules/weather/weatherController")
         this.sendmemsg = require("./modules/sendMeMessages/sendController")
         this.userDetails = require("./modules/user/userController")
-        
+        this.screenshot = require("./modules/screenshot/screenshotController")
     }
 
     routes = (apiBasePath) => {
@@ -13,6 +13,7 @@ class APIRoutes {
         this.app.use(`${apiBasePath}/weather`, this.weather);
         this.app.use(`${apiBasePath}/sendmemsg`, this.sendmemsg)
         this.app.use(`${apiBasePath}/usr`, this.userDetails)
+        this.app.use(`${apiBasePath}/ss`, this.screenshot)
     };
 }
 
