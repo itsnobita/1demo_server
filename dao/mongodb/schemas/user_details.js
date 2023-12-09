@@ -2,14 +2,14 @@ import { Schema, model } from "mongoose";
 
 const userSchema = new Schema(
     {
-        name: {
+        username: {
             type:String
         },
-        value: {
-            type:Number
+        password: {
+            type:String
         }
-    }
-    // { timestamps: true }
+    },
+    { timestamps: true }
 );
 
 export default model("user_details", userSchema, "user_details");

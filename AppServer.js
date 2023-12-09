@@ -11,95 +11,81 @@ import http from "http";
 import APIRoutes from "./APIRoutes";
 import DBConnection from "./dao/connection";
 import { dbProperty } from "./utility/read-properties";
-import Socket from "./service/socket"
-import dotenv from 'dotenv';
+import Socket from "./service/socket";
+import dotenv from "dotenv";
 dotenv.config();
 
 const Appserver = {
-    create: async (port, socketEnabled) => {
-        const app = new express();
+  create: async (port, socketEnabled) => {
+    const app = new express();
 
-        const appServer = http.createServer(app);
-        console.log(`Environment - ${config.get("name")}  ${port}`);
+    const appServer = http.createServer(app);
+    console.log(`Environment - ${config.get("name")}  ${port}`);
 
-        let cors = require("cors");
-        app.use(compression());
-        app.use(cors({ origin: true}));
-        
+    let cors = require("cors");
+    app.use(compression());
+    app.use(cors({ origin: true }));
 
-        const bodyParser = require("body-parser");
-        app.use(bodyParser.urlencoded({ extended: true }));
-        app.use(express.json());
-        // app.use(SourceLogger);
+    const bodyParser = require("body-parser");
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(express.json());
+    // app.use(SourceLogger);
 
-        const objAPIRoutes = new APIRoutes(app);
-        objAPIRoutes.routes("/api/v1");
-        
-        objAPIRoutes.routes("/api/v2");
-console.log(process.env.mongoDB)
-        const mongoDBConnString = dbProperty("mongoDB");
-        await DBConnection.createMongoDBConnectionPool("mongo1", {
-            URL: mongoDBConnString,
-        });
+    const objAPIRoutes = new APIRoutes(app);
+    objAPIRoutes.routes("/api/v1");
 
-        /*BEGIN : Serving Static Files/ FRONTEND Files */
-        app.use(express.static(__dirname + "/public/client/build/"));
-        app.get("/socket", (req, res) => {
-            // logger.info(`url - ${req.originalUrl}`);
-            res.sendFile(
-                path.resolve(__dirname, "public/client/build/socket.html")
-            );
-        });
-        app.get("/minelove", (req, res) => {
-            // logger.info(`url - ${req.originalUrl}`);
-            res.sendFile(
-                path.resolve(__dirname, "public/client/build/show.html")
-            );
-        });
-        app.get("/nobi", (req, res) => {
-            // logger.info(`url - ${req.originalUrl}`);
-            res.sendFile(
-                path.resolve(__dirname, "public/client/build/sendmemessage.html")
-            );
-        });
-        app.get("/weather", (req, res) => {
-            // logger.info(`url - ${req.originalUrl}`);
-            res.sendFile(
-                path.resolve(__dirname, "public/client/build/weather.html")
-            );
-        });
-        app.get("*", (req, res) => {
-            // logger.info(`url - ${req.originalUrl}`);
-            res.sendFile(
-                path.resolve(__dirname, "public/client/build/index.html")
-            );
-        });
-        
+    objAPIRoutes.routes("/api/v2");
+    console.log(process.env.mongoDB);
+    const mongoDBConnString = dbProperty("mongoDB");
+    await DBConnection.createMongoDBConnectionPool("mongo1", {
+      URL: mongoDBConnString,
+    });
 
-        appServer.listen(port, () => {
-          
-        }).timeout = 600000; 
+    /*BEGIN : Serving Static Files/ FRONTEND Files */
+    app.use(express.static(__dirname + "/public/client/build/"));
+    app.get("/socket", (req, res) => {
+      // logger.info(`url - ${req.originalUrl}`);
+      res.sendFile(path.resolve(__dirname, "public/client/build/socket.html"));
+    });
+    app.get("/minelove", (req, res) => {
+      // logger.info(`url - ${req.originalUrl}`);
+      res.sendFile(path.resolve(__dirname, "public/client/build/show.html"));
+    });
+    app.get("/nobi", (req, res) => {
+      // logger.info(`url - ${req.originalUrl}`);
+      res.sendFile(
+        path.resolve(__dirname, "public/client/build/sendmemessage.html")
+      );
+    });
+    app.get("/weather", (req, res) => {
+      // logger.info(`url - ${req.originalUrl}`);
+      res.sendFile(path.resolve(__dirname, "public/client/build/weather.html"));
+    });
+    app.get("*", (req, res) => {
+      // logger.info(`url - ${req.originalUrl}`);
+      res.sendFile(path.resolve(__dirname, "public/client/build/index.html"));
+    });
 
-        let io;
-        if (socketEnabled) {
-            io = Socket(appServer);
-        }
+    appServer.listen(port, () => {}).timeout = 600000;
 
-        process.once("unhandledRejection", (reason, promise) => {
-            console.log("unhandledRejection", reason);
-            // logger.info(
-            //     `Unhandled Rejection at: ${promise} , reason: ${reason}`
-            // );
-            // Application specific logging, throwing an error, or other logic here
-        });
+    let io;
+    if (socketEnabled) {
+      io = Socket(appServer);
+    }
 
-        process.once("error", (error) => {
-            // logger.error(error.name); // Print the warning name
-            // logger.error(error.message); // Print the warning message
-            // logger.error(error.stack); // Print the stack trace
-        });
+    process.once("unhandledRejection", (reason, promise) => {
+      console.log("unhandledRejection", reason);
+      // logger.info(
+      //     `Unhandled Rejection at: ${promise} , reason: ${reason}`
+      // );
+      // Application specific logging, throwing an error, or other logic here
+    });
 
-      
-    },
+    process.once("error", (error) => {
+      // logger.error(error.name); // Print the warning name
+      // logger.error(error.message); // Print the warning message
+      // logger.error(error.stack); // Print the stack trace
+    });
+  },
 };
 export default Appserver;
