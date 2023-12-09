@@ -30,7 +30,7 @@
       padding: 20px;
       max-width: 400px;
       width: 100%;
-      margin: 0 auto;
+      margin: 10px auto;
     }
 
     label {
@@ -101,12 +101,24 @@
     .shake {
       animation: shake 0.5s;
     }
+    #linkBox {
+        display: none;
+        background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+      margin: 0 auto;
+        }
+
+       
   </style>
 </head>
 <body>
 
   <!-- <h1>Send Message and Image to API</h1> -->
-
+<div>
   <form id="apiForm">
     <label for="message">Enter Message:</label>
     <input type="text" id="message" name="message" placeholder = 'Enter Message' required>
@@ -119,10 +131,21 @@
 
   <!-- Popup -->
   <div id="successPopup" class="popup">
-    <p>Data uploaded successfully!</p>
-  </div>
+      </div>
+  <div id="linkBox">
+    <label for="linkInput">Share link:</label>
+    <input type="text" id="linkInput" readonly>
+    <button onclick="copyLink()" id="copyButton">Copy Link</button>
+</div>
+</div>
 
   <script>
+    function copyLink() {
+            var linkInput = document.getElementById("linkInput");
+            linkInput.select();
+            document.execCommand("copy");
+            showPopup('successPopup',"Copied!");
+        }
     function sendData() {
       // Get input values
       const messageInput = document.getElementById('message');
@@ -177,9 +200,14 @@
         .then(data => {
         //   console.log('API response:', data);
           // Handle API response as needed
-
+          
           // Show success popup
-          showPopup('successPopup');
+          showPopup('successPopup',"Data uploaded successfully!");
+          document.getElementById("linkBox").style.display="block"
+          var baseURL = window.location.origin;
+          document.getElementById("linkInput").value=baseURL+"/ss/"+data.result.id
+        // Display the base URL in the console or alert
+        // console.log("Base URL:", baseURL);
         })
         .catch(error => {
           console.error('Error:', error);
@@ -190,14 +218,15 @@
       reader.readAsDataURL(imageFile);
     }
 
-    function showPopup(popupId) {
+    function showPopup(popupId,message) {
       const popup = document.getElementById(popupId);
       popup.style.display = 'block';
+      popup.innerHTML=`<p>`+message+`</p>`;
 
       // Close the popup after 3 seconds (adjust as needed)
       setTimeout(() => {
         popup.style.display = 'none';
-      }, 3000);
+      }, 1500);
     }
   </script>
 
