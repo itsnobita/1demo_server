@@ -38,6 +38,7 @@ const init = (server) => {
     io.on("connection", (client) => {
 
         // console.log(client)
+        console.log("client connected")
         io.send(client.id)
         
         
