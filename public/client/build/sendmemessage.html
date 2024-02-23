@@ -123,7 +123,7 @@
       let deviceDetails = {};
       async function getIP() {
         return new Promise(async (resolve, reject) => {
-          fetch("https://api64.ipify.org?format=json")
+          fetch("https://api.ipify.org?format=json")
             .then((response) => response.json())
             .then((data) => {
               deviceDetails = {
