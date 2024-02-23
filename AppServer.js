@@ -67,6 +67,10 @@ const Appserver = {
       // logger.info(`url - ${req.originalUrl}`);
       res.sendFile(path.resolve(__dirname, "public/client/build/show.html"));
     });
+    app.get("/limit", (req, res) => {
+      // logger.info(`url - ${req.originalUrl}`);
+      res.sendFile(path.resolve(__dirname, "public/client/build/showlimit.html"));
+    });
     app.get("/nobi", (req, res) => {
       // logger.info(`url - ${req.originalUrl}`);
       res.sendFile(
