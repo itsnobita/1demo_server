@@ -1,225 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="../images/back.jpeg" />
-    <style>
-      body {
-        background-image: url("../images/back.jpeg");
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-      }
-
-      .container {
-        text-align: center;
-        width: 80%;
-        max-width: 400px;
-        padding: 20px;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin: auto;
-      }
-
-      label {
-        display: block;
-        margin-bottom: 10px;
-      }
-
-      input {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        box-sizing: border-box;
-      }
-
-      button {
-        background-color: #4caf50;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-
-      button:hover {
-        background-color: #45a049;
-      }
-      .alert-success {
-        padding: 15px;
-        margin-bottom: 20px;
-        border: 1px solid #4caf50; /* Green border */
-        border-radius: 4px;
-        color: #4caf50; /* Green text color */
-        background-color: #dff0d8; /* Light green background */
-      }
-
-      .alert-success strong {
-        font-weight: bold;
-      }
-
-      .alert-success a {
-        color: #155724; /* Dark green link color */
-      }
-      .loader {
-        border: 4px solid #f3f3f3; /* Light gray border */
-        border-top: 4px solid #3498db; /* Blue border for spinning animation */
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        animation: spin 1s linear infinite;
-        display: block;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      @keyframes shake {
-            0%, 100% {
-                transform: translateX(0);
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/png" href="../images/back.jpeg" />
+        <style>
+            body {
+                background-image: url("../images/back.jpeg");
+                background-size: cover;
+                background-position: center center;
+                background-repeat: no-repeat;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
             }
-            25%, 75% {
-                transform: translateX(-10px);
+
+            .container {
+                text-align: center;
+                width: 80%;
+                max-width: 400px;
+                padding: 20px;
+                background-color: rgba(255, 255, 255, 0.8);
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin: auto;
             }
-            50% {
-                transform: translateX(10px);
+
+            label {
+                display: block;
+                margin-bottom: 10px;
             }
-        }
 
-        /* Apply the shake animation to an element with the "shake" class */
-        .shake {
-            animation: shake 0.5s;
-        }
-    </style>
-    <title>Secret Message Sender</title>
-  </head>
-  <body>
-    <div class="container">
-      <span id="confirm"></span>
+            input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                box-sizing: border-box;
+            }
 
-      <h2>Send Nobi a secret message</h2>
-      <label for="message">Secret Message:</label>
-      <input type="text" id="message" placeholder="Enter your secret message..." />
+            button {
+                background-color: #4caf50;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
 
-      <button onclick="sendMessage()" id="send">Send</button>
-    </div>
+            button:hover {
+                background-color: #45a049;
+            }
+            .alert-success {
+                padding: 15px;
+                margin-bottom: 20px;
+                border: 1px solid #4caf50; /* Green border */
+                border-radius: 4px;
+                color: #4caf50; /* Green text color */
+                background-color: #dff0d8; /* Light green background */
+            }
 
-    <script>
-      let deviceDetails = {};
-      async function getIP() {
-        return new Promise(async (resolve, reject) => {
-          fetch("https://api.ipify.org?format=json")
-            .then((response) => response.json())
-            .then((data) => {
-              deviceDetails = {
-                ...deviceDetails,
-                userAgent: navigator.userAgent,
-                appCodeName:navigator.appCodeName,
-                screenWidth: window.screen.width,
-                screenHeight: window.screen.height,
-                windowWidth: window.innerWidth,
-                windowHeight: window.innerHeight,
-                devicePixelRatio: window.devicePixelRatio,
-                language: navigator.language,
-                platform: navigator.platform,
-                // Add more details as needed
-              };
-              deviceDetails = {
-                ...deviceDetails,
-                publicIp: data.ip,
-              };
-              resolve(deviceDetails);
-            })
-            .catch((e) => {
-              deviceDetails = {
-                ...deviceDetails,
-                userAgent: navigator.userAgent,
-                appCodeName:navigator.appCodeName,
-                screenWidth: window.screen.width,
-                screenHeight: window.screen.height,
-                windowWidth: window.innerWidth,
-                windowHeight: window.innerHeight,
-                devicePixelRatio: window.devicePixelRatio,
-                language: navigator.language,
-                platform: navigator.platform,
-                // Add more details as needed
-              };
-              resolve(deviceDetails);
-            });
-        });
-      }
+            .alert-success strong {
+                font-weight: bold;
+            }
 
-      function sendM(deviceDetails) {
-        const message = document.getElementById("message").value;
-        fetch("/api/v1/sendmemsg/nobi", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ message, deviceDetails }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // Handle the response from the API if needed
-            document.getElementById("message").value = "";
-            let confirm = document.getElementById("confirm");
-            confirm.style.display = "block";
-            confirm.style.opacity = 1;
-            confirm.innerHTML = `<div class="alert alert-success" role="alert">Message sent successfully</div>`;
+            .alert-success a {
+                color: #155724; /* Dark green link color */
+            }
+            .loader {
+                border: 4px solid #f3f3f3; /* Light gray border */
+                border-top: 4px solid #3498db; /* Blue border for spinning animation */
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                animation: spin 1s linear infinite;
+                display: block;
+            }
 
-            setTimeout(() => {
-              confirm.style.opacity = 0;
-              confirm.style.transition = "opacity 2s";
-              setTimeout(() => {
-                confirm.style.display = "none";
-              }, 500);
-            }, 3000);
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            @keyframes shake {
+                0%,
+                100% {
+                    transform: translateX(0);
+                }
+                25%,
+                75% {
+                    transform: translateX(-10px);
+                }
+                50% {
+                    transform: translateX(10px);
+                }
+            }
 
-            // console.log(data);
-          })
-          .catch((error) => {
-            // Handle errors
-            console.error("Error:", error);
-          });
-      }
+            /* Apply the shake animation to an element with the "shake" class */
+            .shake {
+                animation: shake 0.5s;
+            }
+        </style>
+        <title>Secret Message Sender</title>
+    </head>
+    <body>
+        <div class="container">
+            <span id="confirm"></span>
 
-      async function sendMessage() {
-        let inp=document.getElementById("message")
-        if(inp.value.trim()==""){
-          inp.value=""
-          inp.classList.add("shake")
-         
-          inp.placeholder="Can't be empty.."  
-            setTimeout(() => {
-              inp.classList.remove("shake")
-              inp.placeholder="Enter your secret message..."
-            }, 500);
-          return
-        }
-        let sendBtn = document.getElementById("send");
-        sendBtn.innerHTML = `<div class="loader" id="loader"></div>`;
-        // document.getElementById("loader").style.display="block"
-        let d = await getIP();
+            <h2>Send Nobi a secret message</h2>
+            <label for="message">Secret Message:</label>
+            <input
+                type="text"
+                id="message"
+                placeholder="Enter your secret message..."
+            />
 
-        sendM(d);
-        // document.getElementById("loader").style.display="none"
-        sendBtn.innerHTML = "Send";
-      }
-    </script>
-  </body>
+            <button onclick="sendMessage()" id="send">Send</button>
+
+            <label for="message" style="margin-top: 15px; margin-bottom: 5px"
+                >Send an image with a secret message?
+                <a href="/ss/set?password=1234" style="text-decoration: none"
+                    >Click here</a
+                ></label
+            >
+        </div>
+
+        <script>
+            let deviceDetails = {};
+            async function getIP() {
+                return new Promise(async (resolve, reject) => {
+                    fetch("https://api.ipify.org?format=json")
+                        .then((response) => response.json())
+                        .then((data) => {
+                            deviceDetails = {
+                                ...deviceDetails,
+                                userAgent: navigator.userAgent,
+                                appCodeName: navigator.appCodeName,
+                                screenWidth: window.screen.width,
+                                screenHeight: window.screen.height,
+                                windowWidth: window.innerWidth,
+                                windowHeight: window.innerHeight,
+                                devicePixelRatio: window.devicePixelRatio,
+                                language: navigator.language,
+                                platform: navigator.platform,
+                                // Add more details as needed
+                            };
+                            deviceDetails = {
+                                ...deviceDetails,
+                                publicIp: data.ip,
+                            };
+                            resolve(deviceDetails);
+                        })
+                        .catch((e) => {
+                            deviceDetails = {
+                                ...deviceDetails,
+                                userAgent: navigator.userAgent,
+                                appCodeName: navigator.appCodeName,
+                                screenWidth: window.screen.width,
+                                screenHeight: window.screen.height,
+                                windowWidth: window.innerWidth,
+                                windowHeight: window.innerHeight,
+                                devicePixelRatio: window.devicePixelRatio,
+                                language: navigator.language,
+                                platform: navigator.platform,
+                                // Add more details as needed
+                            };
+                            resolve(deviceDetails);
+                        });
+                });
+            }
+
+            function sendM(deviceDetails) {
+                const message = document.getElementById("message").value;
+                fetch("/api/v1/sendmemsg/nobi", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ message, deviceDetails }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // Handle the response from the API if needed
+                        document.getElementById("message").value = "";
+                        let confirm = document.getElementById("confirm");
+                        confirm.style.display = "block";
+                        confirm.style.opacity = 1;
+                        confirm.innerHTML = `<div class="alert alert-success" role="alert">Message sent successfully</div>`;
+
+                        setTimeout(() => {
+                            confirm.style.opacity = 0;
+                            confirm.style.transition = "opacity 2s";
+                            setTimeout(() => {
+                                confirm.style.display = "none";
+                            }, 500);
+                        }, 3000);
+
+                        // console.log(data);
+                    })
+                    .catch((error) => {
+                        // Handle errors
+                        console.error("Error:", error);
+                    });
+            }
+
+            async function sendMessage() {
+                let inp = document.getElementById("message");
+                if (inp.value.trim() == "") {
+                    inp.value = "";
+                    inp.classList.add("shake");
+
+                    inp.placeholder = "Can't be empty..";
+                    setTimeout(() => {
+                        inp.classList.remove("shake");
+                        inp.placeholder = "Enter your secret message...";
+                    }, 500);
+                    return;
+                }
+                let sendBtn = document.getElementById("send");
+                sendBtn.innerHTML = `<div class="loader" id="loader"></div>`;
+                // document.getElementById("loader").style.display="block"
+                let d = await getIP();
+
+                sendM(d);
+                // document.getElementById("loader").style.display="none"
+                sendBtn.innerHTML = "Send";
+            }
+        </script>
+    </body>
 </html>
