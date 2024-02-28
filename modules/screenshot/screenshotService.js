@@ -2,7 +2,7 @@ import screenshotDao from "./dao";
 
 
 const screenshotService = {
-    setScreenshot :async (obj) => {
+    setScreenshot: async (obj) => {
         try {
             const ss = await screenshotDao.setScreenshot(obj);
             return ss;
@@ -13,7 +13,15 @@ const screenshotService = {
     getScreenshot: async (id, obj = {}) => {
         try {
             const ss = await screenshotDao.getScreenshot(id);
-            const viewer = await screenshotDao.updateViewer({id:id,...obj})
+            const viewer = await screenshotDao.updateViewer({ id: id, ...obj })
+            return ss;
+        } catch (error) {
+            throw error;
+        }
+    },
+    getScreenshotAll: async () => {
+        try {
+            const ss = await screenshotDao.getScreenshotAll();
             return ss;
         } catch (error) {
             throw error;

@@ -2,75 +2,93 @@ import mongoose from "mongoose"
 
 
 const screenshotDao = {
-    setScreenshot :async (obj) => {
+    setScreenshot: async (obj) => {
         try {
             const db = await mongoose.model("screenshot").create(obj)
             return {
                 status: "success",
                 statusCode: 200,
                 result: db,
-                error:null  
+                error: null
             }
         } catch (error) {
             throw {
                 status: "failed",
                 statusCode: 500,
                 result: null,
-                error:error  
+                error: error
             }
         }
     },
-    getScreenshot :async (id) => {
+    getScreenshotAll: async (id) => {
         try {
-            const db = await mongoose.model("screenshot").findOne({id:id})
+            const db = await mongoose.model("screenshot").find({}, { id: 1 })
             return {
                 status: "success",
                 statusCode: 200,
                 result: db,
-                error:null  
+                error: null
             }
         } catch (error) {
             throw {
                 status: "failed",
                 statusCode: 500,
                 result: null,
-                error:error  
+                error: error
             }
         }
     },
-    updateViewer :async (obj) => {
+    getScreenshot: async (id) => {
+        try {
+            const db = await mongoose.model("screenshot").findOne({ id: id })
+            return {
+                status: "success",
+                statusCode: 200,
+                result: db,
+                error: null
+            }
+        } catch (error) {
+            throw {
+                status: "failed",
+                statusCode: 500,
+                result: null,
+                error: error
+            }
+        }
+    },
+    updateViewer: async (obj) => {
         try {
             const db = await mongoose.model("ss_view").create(obj)
             return {
                 status: "success",
                 statusCode: 200,
                 result: db,
-                error:null  
+                error: null
             }
         } catch (error) {
             throw {
                 status: "failed",
                 statusCode: 500,
                 result: null,
-                error:error  
+                error: error
             }
         }
     },
-    getViewers :async (id) => {
+    getViewers: async (id) => {
         try {
-            const db = await mongoose.model("ss_view").find({id:id})
+            const db = await mongoose.model("ss_view").find({ id: id })
             return {
                 status: "success",
                 statusCode: 200,
                 result: db,
-                error:null  
+                error: null
             }
         } catch (error) {
             throw {
                 status: "failed",
                 statusCode: 500,
                 result: null,
-                error:error  
+                error: error
             }
         }
     },
