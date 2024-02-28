@@ -125,11 +125,33 @@
                 width: 100%;
                 margin: 10px auto;
             }
+            #loader {
+                display: none;
+                border: 16px solid #f3f3f3; /* Light grey */
+                border-top: 16px solid #3498db; /* Blue */
+                border-radius: 50%;
+                width: 70px;
+                height: 70px;
+                animation: spin 1s linear infinite;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
         </style>
     </head>
     <body>
         <!-- <h1>Send Message and Image to API</h1> -->
         <div id="main">
+            <div id="loader"></div>
             <form id="apiForm">
                 <label for="message">Enter Message:</label>
                 <input
@@ -170,6 +192,7 @@
             }
             function sendData() {
                 // Get input values
+                var loader = document.getElementById("loader");
                 const messageInput = document.getElementById("message");
                 const message = messageInput.value.toLowerCase().trim();
                 const imageInput = document.getElementById("image");
@@ -180,6 +203,9 @@
                     messageInput.classList.add("shake", "invalid");
                     messageInput.placeholder = "Cannot be empty";
                     messageInput.value = "";
+                    // Display loader
+
+                    loader.style.display = "none";
 
                     // Remove animation and reset placeholder after 2 seconds
                     setTimeout(() => {
@@ -189,7 +215,7 @@
 
                     return;
                 }
-
+                loader.style.display = "block";
                 // Check if an image is selected
                 if (!imageFile) {
                     alert("Please select an image.");
@@ -223,6 +249,7 @@
 
                             // Show success popup
                             //   showPopup("successPopup", "Image uploaded successfully!");
+                            loader.style.display = "none";
                             showPopup(
                                 "successPopup",
                                 "Message sent successfully with an Image!"

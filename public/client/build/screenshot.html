@@ -1,134 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Screenshot</title>
-    <link rel="icon" type="image/png" href="../images/ss.jpeg" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Screenshot</title>
+        <link rel="icon" type="image/png" href="../images/ss.jpeg" />
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+            }
 
-        h1 {
-            margin-top: 20px;
-        }
+            h1 {
+                margin-top: 20px;
+            }
 
-        #loader {
-            display: none;
-            border: 16px solid #f3f3f3; /* Light grey */
-            border-top: 16px solid #3498db; /* Blue */
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            animation: spin 1s linear infinite;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+            #loader {
+                display: none;
+                border: 16px solid #f3f3f3; /* Light grey */
+                border-top: 16px solid #3498db; /* Blue */
+                border-radius: 50%;
+                width: 80px;
+                height: 80px;
+                animation: spin 1s linear infinite;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
 
-        #myImage {
-            display: none; /* Hide the image initially */
-            max-width: auto;
-            height: 95vh;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
+            #myImage {
+                display: none; /* Hide the image initially */
+                max-width: auto;
+                height: 95vh;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                margin-top: 20px;
+            }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
-</head>
-<body>
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loader"></div>
 
-    <div id="loader"></div>
+        <!-- <h1>Screensh</h1> -->
 
-    <!-- <h1>Screensh</h1> -->
+        <!-- Image element -->
+        <img src="" alt="Image not found" id="myImage" />
 
-    <!-- Image element -->
-    <img src="" alt="Image not found" id="myImage">
+        <script>
+            function callApi(apiUrl) {
+                return fetch(apiUrl)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // console.log(data);
+                        return data; // Return the data for chaining
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        // Handle errors here
+                        throw error; // Rethrow the error for chaining
+                    });
+            }
 
-    <script>
-        function callApi(apiUrl) {
-            return fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    // console.log(data);
-                    return data; // Return the data for chaining
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Handle errors here
-                    throw error; // Rethrow the error for chaining
-                });
-        }
+            function fetchBase64Image(apiUrl) {
+                return fetch(apiUrl)
+                    .then((response) => response.json())
+                    .then((base64) => {
+                        // console.log('Base64 image:', base64);
+                        return base64;
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching base64 image:", error);
+                        throw error;
+                    });
+            }
 
-        function fetchBase64Image(apiUrl) {
-            return fetch(apiUrl)
-                .then(response => response.json())
-                .then(base64 => {
-                    // console.log('Base64 image:', base64);
-                    return base64;
-                })
-                .catch(error => {
-                    console.error('Error fetching base64 image:', error);
-                    throw error;
-                });
-        }
+            function manipulateApiUrl(apiUrl, param = "") {
+                // Manipulate the API URL based on the browser URL
+                return apiUrl + "/" + param;
+            }
 
-        function manipulateApiUrl(apiUrl, param="") {
-            // Manipulate the API URL based on the browser URL
-            return apiUrl + '/' + param;
-        }
+            function onPageLoad() {
+                var loader = document.getElementById("loader");
+                var imageElement = document.getElementById("myImage");
+                var apiUrl1 = "https://api64.ipify.org?format=json";
+                var apiUrl2 = "https://api.example.com/endpoint2";
+                var base64ImageApiUrl = "/api/v1/ss/get";
 
-        function onPageLoad() {
-            var loader = document.getElementById('loader');
-            var imageElement = document.getElementById('myImage');
-            var apiUrl1 = 'https://api64.ipify.org?format=json';
-            var apiUrl2 = 'https://api.example.com/endpoint2';
-            var base64ImageApiUrl = '/api/v1/ss/get';
-            
-            // Get the parameter from the browser URL
-            var param = window.location.pathname.split('/').pop();
+                // Get the parameter from the browser URL
+                var param = window.location.pathname.split("/").pop();
 
-            // console.log(param)
+                // console.log(param)
 
-            // Display loader
-            loader.style.display = 'block';
+                // Display loader
 
-            // Fetch base64 image from API with manipulated URL
-            fetchBase64Image(manipulateApiUrl(base64ImageApiUrl, param))
-                .then(base64Image => {
-                    // Set the src attribute of the image with the fetched base64 data
-                    imageElement.src = 'data:image/jpeg;base64,' + base64Image.result.screenshot;
+                loader.style.display = "block";
 
+                // Fetch base64 image from API with manipulated URL
+                fetchBase64Image(manipulateApiUrl(base64ImageApiUrl, param))
+                    .then((base64Image) => {
+                        // Set the src attribute of the image with the fetched base64 data
+                        imageElement.src =
+                            "data:image/jpeg;base64," +
+                            base64Image.result.screenshot;
 
-                    // Hide loader
-                    loader.style.display = 'none';
+                        // Hide loader
+                        loader.style.display = "none";
 
-                    // Display the image
-                    imageElement.style.display = 'block';
-                })
-                .catch(error => {
-                    // Handle errors from either API call
-                    console.error('Error:', error);
+                        // Display the image
+                        imageElement.style.display = "block";
+                    })
+                    .catch((error) => {
+                        // Handle errors from either API call
+                        console.error("Error:", error);
 
-                    // Hide loader in case of an error
-                    loader.style.display = 'none';
-                    imageElement.style.display = 'block';
-                });
-        }
+                        // Hide loader in case of an error
+                        loader.style.display = "none";
+                        imageElement.style.display = "block";
+                    });
+            }
 
-        window.onload = onPageLoad;
-    </script>
-
-</body>
+            window.onload = onPageLoad;
+        </script>
+    </body>
 </html>
