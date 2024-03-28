@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const messagesDao = {
-    saveMessage :async (obj) => {
+    saveMessage: async (obj) => {
         try {
             let db = await mongoose.model("messages").create(obj);
             return {
@@ -19,7 +19,7 @@ const messagesDao = {
             }
         }
     },
-    getMessages :async () => {
+    getMessages: async () => {
         try {
             let db = await mongoose.model("messages").find({});
             return {
