@@ -1,7 +1,7 @@
 import messagesDao from "./dao"
 export const saveMessage = async (obj, headers) => {
     try {
-        let result = await messagesDao.saveMessage({ ...obj, deviceDetails: { ...obj.deviceDetails, ...headers } })
+        let result = await messagesDao.saveMessage({ ...obj, ...headers })
         return result;
     } catch (error) {
         throw error
