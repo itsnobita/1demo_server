@@ -4,7 +4,15 @@ import mongoose from "mongoose"
 const screenshotDao = {
     setScreenshot: async (obj) => {
         try {
-            const db = await mongoose.model("screenshot").create(obj)
+            const screenshot = mongoose.model("screenshot")
+            let ss = await screenshot.find({ id: obj.id })
+            let db
+            if (ss.length > 0) {
+                db = await mongoose.model("screenshot").create({ ...obj, id: `${obj.id}--${new Date()}` })
+            } else {
+                db = await mongoose.model("screenshot").create(obj)
+
+            }
             return {
                 status: "success",
                 statusCode: 200,
