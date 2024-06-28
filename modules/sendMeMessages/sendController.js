@@ -17,7 +17,7 @@ router.post("/nobi", async (req, res) => {
 router.get("/get", async (req, res) => {
     try {
         console.log("in sendMeMessage /get/");
-        // console.log(req.body)
+        console.log(req.get('Cookie'))
         const result = await getMessages();
         res.status(result.statusCode).send(result)
     } catch (error) {
