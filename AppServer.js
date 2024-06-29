@@ -75,12 +75,12 @@ const Appserver = {
             // logger.info(`url - ${req.originalUrl}`);
             res.sendFile(path.resolve(__dirname, "public/client/build/showlimit.html"));
         });
-        app.get("/nobi", (req, res) => {
-            // logger.info(`url - ${req.originalUrl}`);
-            res.sendFile(
-                path.resolve(__dirname, "public/client/build/sendmemessage.html")
-            );
-        });
+        // app.get("/nobi", (req, res) => {
+        //     // logger.info(`url - ${req.originalUrl}`);
+        //     res.sendFile(
+        //         path.resolve(__dirname, "public/client/build/sendmemessage.html")
+        //     );
+        // });
         app.get("/weather", (req, res) => {
             // logger.info(`url - ${req.originalUrl}`);
             res.sendFile(path.resolve(__dirname, "public/client/build/weather.html"));
