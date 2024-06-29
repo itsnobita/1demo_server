@@ -6,6 +6,7 @@ class APIRoutes {
         this.sendmemsg = require("./modules/sendMeMessages/sendController")
         this.userDetails = require("./modules/user/userController")
         this.screenshot = require("./modules/screenshot/screenshotController")
+        this.shared = require("./modules/shared/SharedController")
     }
 
     routes = (apiBasePath) => {
@@ -14,6 +15,7 @@ class APIRoutes {
         this.app.use(`${apiBasePath}/sendmemsg`, this.sendmemsg)
         this.app.use(`${apiBasePath}/usr`, this.userDetails)
         this.app.use(`${apiBasePath}/ss`, this.screenshot)
+        this.app.use(`${apiBasePath}/shared`, this.shared)
     };
 }
 
