@@ -4,6 +4,7 @@
     "LOCAL_SERVER_PORT": "9090",
     "SOCKET_SERVER_PORT": "9093",
     "env": "development",
-    "weather_api":"https://api.weatherapi.com/v1",
-    "weather_key":"f7d8222ab5ab43b48f440749230512"
+    "weather_api": "https://api.weatherapi.com/v1",
+    "weather_key": "f7d8222ab5ab43b48f440749230512",
+    "redis-url": "rediss://red-clsir5dcm5oc73a8lckg:kPp8RCmUUgvKk6I9TaZqpqTwR1KWk0SN@oregon-redis.render.com:6379"
 }

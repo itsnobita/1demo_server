@@ -12,9 +12,9 @@ import APIRoutes from "./APIRoutes";
 import DBConnection from "./dao/connection";
 import { dbProperty } from "./utility/read-properties";
 import Socket from "./service/socket";
+import { isRedisConnected } from "./cache/Cache-Redis";
 import dotenv from "dotenv";
 dotenv.config();
-
 const Appserver = {
     create: async (port, socketEnabled) => {
         const app = new express();
