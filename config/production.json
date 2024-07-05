@@ -5,5 +5,6 @@
     "SOCKET_SERVER_PORT": "9093",
     "env": "development",
     "weather_api":"https://api.weatherapi.com/v1",
-    "weather_key":"f7d8222ab5ab43b48f440749230512"
+    "weather_key":"f7d8222ab5ab43b48f440749230512",
+    "ip_api":"https://api.ipdata.co"
 }

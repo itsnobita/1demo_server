@@ -3,11 +3,12 @@ import mongoose from "mongoose";
 const messagesDao = {
     saveMessage: async (obj) => {
         try {
-            let db = await mongoose.model("messages").create(obj);
+            let db =""
+                // await mongoose.model("messages").create(obj);
             return {
                 status: "success",
                 statusCode: 200,
-                result: db,
+                result: { message:"success"},
                 error: null
             }
         } catch (error) {

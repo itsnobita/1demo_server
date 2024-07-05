@@ -13,6 +13,8 @@ import DBConnection from "./dao/connection";
 import { dbProperty } from "./utility/read-properties";
 import Socket from "./service/socket";
 import { isRedisConnected } from "./cache/Cache-Redis";
+const cookieParser = require('cookie-parser');
+
 import dotenv from "dotenv";
 dotenv.config();
 const Appserver = {
@@ -24,7 +26,7 @@ const Appserver = {
 
         let cors = require("cors");
         app.use(compression());
-        app.use(cors({ origin: true }));
+        app.use(cors({ origin: true,credentials:true }));
 
         const bodyParser = require("body-parser");
         app.use(bodyParser.urlencoded({ limit: "20mb", extended: true }));

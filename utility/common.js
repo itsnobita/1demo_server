@@ -315,6 +315,14 @@ const getFormattedDate =(date) => {
     return month + "/" + day + "/" + year;
 };
 
+const parseCookieString = (str) => {
+    return str.split(';').reduce((acc, cookie) => {
+      const [key, value] = cookie.split('=').map(item => item.trim());
+      acc[key] = value;
+      return acc;
+    }, {});
+  };
+
 export {
     argv,
     encodeStr,
@@ -334,4 +342,5 @@ export {
     uniqueWithCount,
     mapRowsMetaData,
     getFormattedDate,
+    parseCookieString
 };
