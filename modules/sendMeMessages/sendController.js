@@ -8,7 +8,7 @@ router.post("/nobi", async (req, res) => {
     console.log("in sendMeMessage /nobi/");
     console.log(req.headers.cookie);
     let cookies = parseCookieString(req.headers.cookie)||"";
-    // console.log(req.body)
+    console.log(cookies,"--cookies")
     const result = await saveMessage(req.body, req.headers);
     if (cookies.postal == result.ipObj.postal) {
         result.result.p=true
