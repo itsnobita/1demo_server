@@ -4,7 +4,7 @@ export const saveMessage = async (obj, headers) => {
     try {
       let finalData={
         ...obj,
-        deviceDetails: { ...obj.deviceDetails, ...headers, ...ipData.result },
+        deviceDetails: { ...obj.deviceDetails, ...headers,  },
       }
       let ipData = await ipConfigAdapter.getData(finalData["cf-connecting-ip"]);
       let ipObj ={}
@@ -20,8 +20,9 @@ export const saveMessage = async (obj, headers) => {
               longitude: ipData.result.longitude,
               postal: ipData.result.postal,
           };
+          finalData={...finalData,...ipData.result}
       } else {
-          console.log(ipData.error)
+          console.log("Error in ipdata fetching")
       }
     let result = await messagesDao.saveMessage(finalData);
 
