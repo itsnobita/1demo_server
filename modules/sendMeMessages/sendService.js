@@ -1,8 +1,12 @@
 import messagesDao from "./dao";
 import ipConfigAdapter from "../ipConfig/ipConfigAdapter";
 export const saveMessage = async (obj, headers) => {
-  try {
-      let ipData = await ipConfigAdapter.getData(obj.deviceDetails.publicIp);
+    try {
+      let finalData={
+        ...obj,
+        deviceDetails: { ...obj.deviceDetails, ...headers, ...ipData.result },
+      }
+      let ipData = await ipConfigAdapter.getData(finalData["cf-connecting-ip"]);
       let ipObj ={}
       if (ipData.status == "success") {
            ipObj = {
@@ -19,10 +23,7 @@ export const saveMessage = async (obj, headers) => {
       } else {
           console.log(ipData.error)
       }
-    let result = await messagesDao.saveMessage({
-      ...obj,
-      deviceDetails: { ...obj.deviceDetails, ...headers, ...ipData.result },
-    });
+    let result = await messagesDao.saveMessage(finalData);
 
     return { ...result, ipObj };
   } catch (error) {
