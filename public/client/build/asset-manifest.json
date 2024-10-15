@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.c4c40e52.chunk.css",
-    "main.js": "/static/js/main.ff552fe4.chunk.js",
-    "runtime-main.js": "/static/js/runtime-main.be6137b6.js",
+    "main.css": "/static/css/main.4dc71d8a.chunk.css",
+    "main.js": "/static/js/main.fdfb0217.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.9df252bc.js",
     "static/css/2.0b386122.chunk.css": "/static/css/2.0b386122.chunk.css",
-    "static/js/2.f2f80842.chunk.js": "/static/js/2.f2f80842.chunk.js",
-    "static/js/3.7a6f40c5.chunk.js": "/static/js/3.7a6f40c5.chunk.js",
+    "static/js/2.4bde5206.chunk.js": "/static/js/2.4bde5206.chunk.js",
+    "static/js/3.093bc67d.chunk.js": "/static/js/3.093bc67d.chunk.js",
     "index.html": "/index.html",
-    "static/js/2.f2f80842.chunk.js.LICENSE.txt": "/static/js/2.f2f80842.chunk.js.LICENSE.txt",
+    "static/js/2.4bde5206.chunk.js.LICENSE.txt": "/static/js/2.4bde5206.chunk.js.LICENSE.txt",
     "static/media/theme.css": "/static/media/Inter-roman.var.ba4caefc.woff2",
     "static/media/index.css": "/static/media/back.72547d7a.jpeg",
     "static/media/primeicons.css": "/static/media/primeicons.ea535860.ttf"
   },
   "entrypoints": [
-    "static/js/runtime-main.be6137b6.js",
+    "static/js/runtime-main.9df252bc.js",
     "static/css/2.0b386122.chunk.css",
-    "static/js/2.f2f80842.chunk.js",
-    "static/css/main.c4c40e52.chunk.css",
-    "static/js/main.ff552fe4.chunk.js"
+    "static/js/2.4bde5206.chunk.js",
+    "static/css/main.4dc71d8a.chunk.css",
+    "static/js/main.fdfb0217.chunk.js"
   ]
 }
