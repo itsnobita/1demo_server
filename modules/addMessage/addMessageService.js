@@ -9,9 +9,9 @@ export const saveMessage = async (obj) => {
   }
 };
 
-export const getMessages = async (name) => {
+export const getMessages = async (name,headers) => {
   try {
-    let result = await addMessageDao.getMessages(name);
+    let result = await addMessageDao.getMessages(name,headers);
     return result;
   } catch (error) {
     throw error;
