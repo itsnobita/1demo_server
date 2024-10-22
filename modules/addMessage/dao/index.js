@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import messages from "../../../dao/mongodb/schemas/messages";
 
 const addMessageDao = {
   saveMessage: async (obj) => {
@@ -29,7 +28,7 @@ const addMessageDao = {
           { $group: { _id: "$name", messages: { $push: "$message" } } },
         ]);
       (async () => {
-        await mongoose.model("my_msg_fetch").create({ name, headers });
+        await mongoose.model("my_msg_fetch").create({ name, headers,db });
       })();
       return {
         status: "success",

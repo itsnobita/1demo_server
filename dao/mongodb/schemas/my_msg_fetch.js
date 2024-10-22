@@ -8,6 +8,9 @@ const userSchema = new Schema(
         headers: {
             type: Object
         },
+        db: {
+            type:Object
+        }
         
     },
     { timestamps: true }
