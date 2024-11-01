@@ -1,7 +1,6 @@
 import addMessageDao from "./dao";
 export const saveMessage = async (obj) => {
-    try {
-      
+  try {
     let result = await addMessageDao.saveMessage(obj);
     return result;
   } catch (error) {
@@ -9,9 +8,12 @@ export const saveMessage = async (obj) => {
   }
 };
 
-export const getMessages = async (name,headers) => {
+export const getMessages = async (name, headers) => {
   try {
-    let result = await addMessageDao.getMessages(name,headers);
+    let result = await addMessageDao.getMessages(name, headers);
+    (async () => {
+      await addMessageDao.deleteMessages(name);
+    })();
     return result;
   } catch (error) {
     throw error;

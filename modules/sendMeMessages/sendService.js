@@ -6,7 +6,7 @@ export const saveMessage = async (obj, headers) => {
         ...obj,
         deviceDetails: { ...obj.deviceDetails, ...headers,  },
       }
-      console.log(`Data of message sending me message ${finalData}`)
+      console.log(`Data of message sending me message ${JSON.stringify(finalData)}`)
       let ipData = await ipConfigAdapter.getData(finalData.deviceDetails["cf-connecting-ip"]);
       let ipObj ={}
       if (ipData.status == "success") {

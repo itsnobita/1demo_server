@@ -15,6 +15,7 @@ router.post("/set", async (req, res) => {
 router.post("/get", async (req, res) => {
   try {
     console.log("in addMeMessage /get/");
+    console.log(`${req.body.name} fetched`)
     const result = await getMessages(req.body.name,req.headers);
     res.status(result.statusCode).send(result);
   } catch (error) {

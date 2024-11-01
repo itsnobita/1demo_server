@@ -45,6 +45,26 @@ const addMessageDao = {
       };
     }
   },
+  deleteMessages: async (name = "") => {
+    try {
+      let db = await mongoose
+        .model("my_message")
+        .deleteMany({name});
+      return {
+        status: "success",
+        statusCode: 200,
+        result: db,
+        error: null,
+      };
+    } catch (error) {
+      throw {
+        status: "failed",
+        statusCode: 500,
+        result: null,
+        error: error,
+      };
+    }
+  },
 };
 
 export default addMessageDao;
